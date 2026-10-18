@@ -1,3 +1,7 @@
 psycopg[binary]
 python-dotenv
 pytest
+duckdb
+streamlit
+plotly
+pandas
