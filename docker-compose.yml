@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17
+    container_name: fuel_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT}:5432"   # accessible seulement depuis ton PC
+    volumes:
+      - fuel_pgdata:/var/lib/postgresql/data  # les données survivent au redémarrage
+      - ./sql:/docker-entrypoint-initdb.d:ro  # scripts SQL lancés à la 1re création
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  fuel_pgdata:

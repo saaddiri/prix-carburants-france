@@ -2,3 +2,5 @@ data/
 .venv/
 .env
 __pycache__/
+logs/
+.vscode/
